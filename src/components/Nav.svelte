@@ -2,6 +2,7 @@
   import { Link, link } from "svelte-routing";
   import { getContext } from "svelte";
   import { ROUTER } from "svelte-routing/src/contexts";
+  import { _, locale, locales } from "svelte-i18n";
 
   const { activeRoute } = getContext(ROUTER);
 
@@ -44,8 +45,17 @@
 
   <div id="navbarBasicExample" class="navbar-menu" class:is-active={isOpen}>
     <div class="navbar-start">
-      <Link to="/web-lessons" {getProps}>Web Lessons</Link>
-      <Link to="/typing-lessons" {getProps}>Typing Lessons</Link>
+      <Link to="/web-lessons" {getProps}>
+        {$_('page.web_lessons.nav', { default: 'Web Lessons' })}
+      </Link>
+      <Link to="/typing-lessons" {getProps}>
+        {$_('page.typing_lessons.nav', { default: 'Typing Lessons' })}
+      </Link>
+      <select bind:value={$locale}>
+        {#each $locales as locale}
+          <option value={locale}>{locale}</option>
+        {/each}
+      </select>
     </div>
   </div>
 </nav>
